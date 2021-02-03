@@ -32,6 +32,16 @@ public class PublishController {
     }
 
     //跳转到发布页
+
+    /**
+     *
+     * @param title
+     * @param description
+     * @param tag
+     * @param request
+     * @param model
+     * @return
+     */
     @PostMapping("/publish")
     public String doPublish(
             @RequestParam(value = "title", required = false) String title,
@@ -44,23 +54,27 @@ public class PublishController {
         model.addAttribute("description", description);
         model.addAttribute("tag", tag);
 
-        if (title == null) {
+        //标题不为空
+        if (title == null || title =="") {
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }
 
 
 
+        //判断用户是否登录
         Cookie[] cookies = request.getCookies();
         User user = null;
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                user = userMapper.findByToKen(token);
-                if (user != null){
-                    request.getSession().setAttribute("user",user);
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")){
+                    String token = cookie.getValue();
+                    user = userMapper.findByToKen(token);
+                    if (user != null){
+                        request.getSession().setAttribute("user",user);
+                    }
+                    break;
                 }
-                break;
             }
         }
         if (user == null){
@@ -68,6 +82,7 @@ public class PublishController {
             return "publish";
         }
 
+        //将问题保存到数据库中
         Question question = new Question();
         question.setTitle(title);
         question.setDescription(description);

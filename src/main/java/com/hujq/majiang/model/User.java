@@ -1,27 +1,28 @@
 package com.hujq.majiang.model;
 
 public class User {
-    private Long id;
+    private Integer id;
     private String account_id;
     private String name;
     private String token;
     private Long gmt_create;
     private Long gmt_modified;
     private String bio;
+    private String avatar_url;
 
-    public String getBio() {
-        return bio;
+    public String getAvatar_url() {
+        return avatar_url;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,5 +64,13 @@ public class User {
 
     public void setGmt_modified(Long gmt_modified) {
         this.gmt_modified = gmt_modified;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
     }
 }
