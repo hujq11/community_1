@@ -7,6 +7,15 @@ public class User {
     private String token;
     private Long gmt_create;
     private Long gmt_modified;
+    private String bio;
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public Long getId() {
         return id;
