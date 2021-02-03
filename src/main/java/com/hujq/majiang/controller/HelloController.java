@@ -1,5 +1,6 @@
 package com.hujq.majiang.controller;
 
+import com.hujq.majiang.dto.PaginationDTO;
 import com.hujq.majiang.dto.QuestionDTO;
 import com.hujq.majiang.mapper.QuestionMapper;
 import com.hujq.majiang.mapper.UserMapper;
@@ -32,7 +33,10 @@ public class HelloController {
     private QuestionService questionService;
 
     @GetMapping("/")
-    public String index(HttpServletRequest request,Model model) {
+    public String index(HttpServletRequest request,Model model,
+                        @RequestParam(name="page",defaultValue ="1") Integer page,
+                        @RequestParam(name="size",defaultValue = "5") Integer size
+    ) {
         Cookie[] cookies = request.getCookies();
         System.out.println(cookies);
         //判断是否登录,持久登录信息
@@ -49,6 +53,8 @@ public class HelloController {
             }
         }
         List<QuestionDTO> questionList = questionService.list();
+        PaginationDTO pagination = questionService.list(page,size);
+        model.addAttribute("pagination", pagination);
         model.addAttribute("question",questionList);
         return "index";
     }
