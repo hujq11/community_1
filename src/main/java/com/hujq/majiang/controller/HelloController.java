@@ -37,21 +37,7 @@ public class HelloController {
                         @RequestParam(name="page",defaultValue ="1") Integer page,
                         @RequestParam(name="size",defaultValue = "5") Integer size
     ) {
-        Cookie[] cookies = request.getCookies();
-        System.out.println(cookies);
-        //判断是否登录,持久登录信息
-        if (cookies !=null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    User user = userMapper.findByToKen(token);
-                    if (user != null){
-                        request.getSession().setAttribute("user",user);
-                    }
-                    break;
-                }
-            }
-        }
+
         List<QuestionDTO> questionList = questionService.list();
         PaginationDTO pagination = questionService.list(page,size);
         model.addAttribute("pagination", pagination);
